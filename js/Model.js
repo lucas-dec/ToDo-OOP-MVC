@@ -4,7 +4,7 @@ class Model {
       {
         id: 1,
         name: "1st category",
-        selected: false,
+        selected: true,
         tasks: [
           {
             id: 1,
@@ -50,5 +50,41 @@ class Model {
 
   bindRenderCategoryList(callback) {
     this.renderCategoryList = callback;
+  }
+
+  bindRenderLabelTask(callback) {
+    this.renderLabelTask = callback;
+  }
+
+  bindRenderTaskList(callback) {
+    this.renderTaskList = callback;
+  }
+
+  addCategory(name) {
+    let id;
+    if (this.categoryList.length > 0)
+      id = this.categoryList[this.categoryList.length - 1].id + 1;
+    else id = 1;
+    const category = {
+      id,
+      name,
+      selected: false,
+      tasks: []
+    };
+    this.categoryList.push(category);
+    this.selectCategory(id);
+  }
+
+  selectCategory(id) {
+    this.categoryList.forEach(category => {
+      category.selected = false;
+    });
+
+    const indexCategory = this.categoryList.findIndex(
+      category => category.id === id
+    );
+
+    this.categoryList[indexCategory].selected = true;
+    this.renderCategoryList(this.categoryList);
   }
 }

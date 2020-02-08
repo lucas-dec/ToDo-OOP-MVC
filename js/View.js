@@ -63,6 +63,8 @@ class View {
       this.containerCategoryList,
       this.containerTasksList
     );
+
+    this._newTextTask = "";
   }
 
   showCategories(categories) {
@@ -84,6 +86,141 @@ class View {
         }
         this.categoryList.appendChild(liCategory);
       });
+    }
+  }
+
+  bindHandleAddCategory(handler) {
+    this.formCategory.addEventListener("submit", e => {
+      e.preventDefault();
+      if (this.inputCategory.value == "") return;
+      const name = this.inputCategory.value;
+      handler(name);
+      this.inputCategory.value = "";
+      this.containerCategoryList.classList.add("slide-out");
+      this.containerTasksList.classList.add("slide-in");
+    });
+  }
+
+  bindHandleSelectedCategory(handler) {
+    this.categoryList.addEventListener("click", e => {
+      if (e.target.tagName.toLowerCase() !== "li") return;
+      else {
+        const liCategory = e.target;
+        let idCategory = liCategory.dataset.idCategory;
+        idCategory = parseInt(idCategory);
+        handler(idCategory);
+        this.containerCategoryList.classList.add("slide-out");
+        this.containerTasksList.classList.add("slide-in");
+      }
+    });
+  }
+
+  showTasksLabel(idCategory, nameCategory, countTasks) {
+    while (this.containerNameCategory.firstChild) {
+      this.containerNameCategory.firstChild.remove();
+    }
+
+    if (nameCategory === null) {
+      this.nameCategory.textContent = "Select list ...";
+      this.containerNameCategory.appendChild(this.nameCategory);
+    } else {
+      const btnBack = document.createElement("button");
+      btnBack.className = "btn btn-back";
+      const btnRemoveCategory = document.createElement("button");
+      btnRemoveCategory.className = "btn btn-remove-category";
+      btnRemoveCategory.dataset.idCategory = idCategory;
+
+      this.nameCategory.textContent = nameCategory;
+
+      const counter = document.createElement("span");
+      counter.className = "count-task";
+
+      const counterText = countTasks === 1 ? "task" : "tasks";
+
+      counter.textContent = `${countTasks} ${counterText} to do`;
+
+      this.containerNameCategory.append(
+        btnBack,
+        btnRemoveCategory,
+        this.nameCategory,
+        counter
+      );
+      btnBack.addEventListener("click", () => {
+        this.containerCategoryList.classList.remove("slide-out");
+        this.containerTasksList.classList.remove("slide-in");
+      });
+    }
+  }
+
+  showTasks(tasks) {
+    while (this.tasksList.firstChild) {
+      this.tasksList.firstChild.remove();
+    }
+    while (this.containerForm.firstChild) {
+      this.containerForm.firstChild.remove();
+    }
+
+    if (tasks === null) {
+      const msg = document.createElement("h3");
+      msg.textContent = "Choose or create new list of tasks ...";
+      this.tasksList.appendChild(msg);
+    } else {
+      if (tasks.length === 0) {
+        const msg = document.createElement("h3");
+        msg.textContent = "Nothing to do ! add a new task ...";
+        this.tasksList.appendChild(msg);
+
+        const formTask = document.createElement("form");
+        const inputTask = document.createElement("input");
+        inputTask.type = "text";
+        inputTask.className = "textTask";
+        inputTask.placeholder = "add task ...";
+        const btnAddTask = document.createElement("button");
+        btnAddTask.type = "submit";
+        btnAddTask.className = "btn btn-add";
+        formTask.append(inputTask, btnAddTask);
+
+        this.containerForm.appendChild(formTask);
+      } else {
+        tasks.forEach(task => {
+          const liTask = document.createElement("li");
+          const statusTask = document.createElement("label");
+          statusTask.className = "statusTask";
+          const taskDone = document.createElement("input");
+          taskDone.type = "checkbox";
+          if (task.completed) {
+            taskDone.setAttribute("checked", true);
+            taskDone.classList.add("task-completed");
+          }
+          const btnTaskDone = document.createElement("span");
+          btnTaskDone.className = "btn-task-done";
+          statusTask.append(taskDone, btnTaskDone);
+
+          const taskText = document.createElement("div");
+          taskText.className = "text-task";
+          taskText.setAttribute("contenteditable", true);
+          taskText.textContent = task.text;
+          liTask.dataset.idTask = task.id;
+          if (task.completed) liTask.classList.add("completed");
+
+          const btnRemove = document.createElement("button");
+          btnRemove.className = "btn-remove";
+
+          liTask.append(statusTask, taskText, btnRemove);
+          this.tasksList.appendChild(liTask);
+        });
+        const formTask = document.createElement("form");
+        const inputTask = document.createElement("input");
+        inputTask.type = "text";
+        inputTask.className = "textTask";
+        inputTask.placeholder = "add task ...";
+        const btnAddTask = document.createElement("button");
+        btnAddTask.type = "submit";
+        btnAddTask.className = "btn btn-add";
+        formTask.append(inputTask, btnAddTask);
+
+        this.containerForm.appendChild(formTask);
+      }
     }
   }
 }
