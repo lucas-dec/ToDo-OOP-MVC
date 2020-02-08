@@ -47,4 +47,8 @@ class Model {
       }
     ];
   }
+
+  bindRenderCategoryList(callback) {
+    this.renderCategoryList = callback;
+  }
 }
