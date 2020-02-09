@@ -63,8 +63,6 @@ class View {
       this.containerCategoryList,
       this.containerTasksList
     );
-
-    this._newTextTask = "";
   }
 
   showCategories(categories) {
@@ -183,7 +181,6 @@ class View {
         const msg = document.createElement("h3");
         msg.textContent = "Nothing to do ! add a new task ...";
         this.tasksList.appendChild(msg);
-
         const formTask = document.createElement("form");
         const inputTask = document.createElement("input");
         inputTask.type = "text";
@@ -236,5 +233,45 @@ class View {
         this.containerForm.appendChild(formTask);
       }
     }
+  }
+
+  bindHandleAddTasks(handler) {
+    this.containerForm.addEventListener("submit", e => {
+      e.preventDefault();
+      const inputTask = this.containerForm.querySelector("input");
+      if (inputTask.value == "") return;
+      const text = inputTask.value;
+
+      handler(text);
+
+      inputTask.value = "";
+    });
+  }
+
+  getIdTask(btn) {
+    let idTask = btn.parentNode.dataset.idTask;
+    idTask = parseInt(idTask);
+    return idTask;
+  }
+
+  bindHandleRemoveTask(handler) {
+    this.containerTasksList.addEventListener("click", e => {
+      if (!e.target.tagName.toLowerCase() === "button") return;
+      const btn = e.target;
+      if (btn.classList.contains("btn-remove")) {
+        const idTask = this.getIdTask(btn);
+        handler(idTask, "removeTask");
+      } else return;
+    });
+  }
+
+  bindHandleMakeCompletedTask(handler) {
+    this.tasksList.addEventListener("change", e => {
+      if (!e.target.type === "checkbox") return;
+      const btn = e.target.parentNode;
+
+      const idTask = this.getIdTask(btn);
+      handler(idTask, "makeCompleted");
+    });
   }
 }

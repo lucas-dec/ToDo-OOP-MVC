@@ -13,6 +13,10 @@ class Controller {
     );
     this.view.bindHandleRemoveCategory(this.handleRemoveCategory.bind(this));
 
+    this.view.bindHandleAddTasks(this.handleAddTasks.bind(this));
+    this.view.bindHandleRemoveTask(this.handleOptionsTask.bind(this));
+    this.view.bindHandleMakeCompletedTask(this.handleOptionsTask.bind(this));
+
     this.renderCategoryList(this.model.categoryList);
     this.renderLabelTask(this.model.categoryList);
     this.renderTaskList(this.model.categoryList);
@@ -58,5 +62,13 @@ class Controller {
       this.view.showTasks(activeCategory[0].tasks);
       localStorage.setItem("todo", JSON.stringify(this.model.categoryList));
     }
+  }
+
+  handleAddTasks(text) {
+    this.model.addTask(text);
+  }
+
+  handleOptionsTask(idTask, option, editText) {
+    this.model.optionsTask(idTask, option, editText);
   }
 }

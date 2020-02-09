@@ -109,4 +109,48 @@ class Model {
 
     this.renderLabelTask(nameCategory, countTasks);
   }
+  addTask(text) {
+    const indexSelectedCategories = this.categoryList.findIndex(
+      category => category.selected === true
+    );
+
+    let id;
+    if (this.categoryList[indexSelectedCategories].tasks.length > 0)
+      id =
+        this.categoryList[indexSelectedCategories].tasks[
+          this.categoryList[indexSelectedCategories].tasks.length - 1
+        ].id + 1;
+    else id = 1;
+    const task = {
+      id,
+      text,
+      completed: false
+    };
+    this.categoryList[indexSelectedCategories].tasks.push(task);
+    this.renderLabelTask(this.categoryList);
+    this.renderTaskList(this.categoryList);
+  }
+
+  optionsTask(idTask, option, editText) {
+    const indexSelectedCategories = this.categoryList.findIndex(
+      category => category.selected
+    );
+    const indexTask = this.categoryList[
+      indexSelectedCategories
+    ].tasks.findIndex(task => task.id === idTask);
+
+    if (option === "removeTask") {
+      this.categoryList[indexSelectedCategories].tasks.splice(indexTask, 1);
+    }
+    if (option === "makeCompleted") {
+      let status = this.categoryList[indexSelectedCategories].tasks[indexTask]
+        .completed;
+      this.categoryList[indexSelectedCategories].tasks[
+        indexTask
+      ].completed = !status;
+    }
+
+    this.renderLabelTask(this.categoryList);
+    this.renderTaskList(this.categoryList);
+  }
 }
