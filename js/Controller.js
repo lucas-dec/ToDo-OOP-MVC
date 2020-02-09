@@ -11,6 +11,7 @@ class Controller {
     this.view.bindHandleSelectedCategory(
       this.handleSelectedCategory.bind(this)
     );
+    this.view.bindHandleRemoveCategory(this.handleRemoveCategory.bind(this));
 
     this.renderCategoryList(this.model.categoryList);
     this.renderLabelTask(this.model.categoryList);
@@ -27,6 +28,10 @@ class Controller {
 
   handleSelectedCategory(id) {
     this.model.selectCategory(id);
+  }
+
+  handleRemoveCategory(nameCategory) {
+    this.model.removeCategory(nameCategory);
   }
 
   renderLabelTask(categoryList) {

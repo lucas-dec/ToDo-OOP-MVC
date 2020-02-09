@@ -115,6 +115,20 @@ class View {
     });
   }
 
+  bindHandleRemoveCategory(handler) {
+    this.containerTasksList.addEventListener("click", e => {
+      if (
+        e.target.tagName.toLowerCase() === "button" &&
+        e.target.classList.contains("btn-remove-category")
+      ) {
+        this.containerCategoryList.classList.remove("slide-out");
+        this.containerTasksList.classList.remove("slide-in");
+        const idCategory = e.target.dataset.idCategory;
+        handler(idCategory);
+      } else return;
+    });
+  }
+
   showTasksLabel(idCategory, nameCategory, countTasks) {
     while (this.containerNameCategory.firstChild) {
       this.containerNameCategory.firstChild.remove();

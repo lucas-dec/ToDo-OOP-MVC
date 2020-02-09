@@ -86,5 +86,27 @@ class Model {
 
     this.categoryList[indexCategory].selected = true;
     this.renderCategoryList(this.categoryList);
+    this.renderLabelTask(this.categoryList);
+    this.renderTaskList(this.categoryList);
+  }
+
+  removeCategory(idCategory) {
+    const indexCategory = this.categoryList.findIndex(
+      category => category.id === idCategory
+    );
+    this.categoryList.splice(indexCategory, 1);
+    this.renderCategoryList(this.categoryList);
+    this.renderLabelTask(null);
+    this.renderTaskList(null);
+  }
+
+  showLabelTasks() {
+    const selectedCategory = this.categoryList.findIndex(
+      category => category.selected
+    );
+    const nameCategory = this.categoryList[selectedCategory].name;
+    const countTasks = this.categoryList[selectedCategory].tasks.length;
+
+    this.renderLabelTask(nameCategory, countTasks);
   }
 }
