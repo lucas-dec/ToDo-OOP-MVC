@@ -317,16 +317,12 @@ ul.listTasks li button.btn-remove {
   .label-box {
     height: 25%;
   }
-  /* ul.list {
-    height: 60%;
-  } */
+
   ul.list li {
     padding: 0.5em;
     font-size: 1rem;
   }
   form input {
-    /* height: 70%;
-    width: 80%; */
     font-size: 1rem;
   }
   .container-form {
@@ -346,9 +342,7 @@ ul.listTasks li button.btn-remove {
   .label-box {
     height: 15%;
   }
-  /* ul.list {
-    height: 75%;
-  } */
+
   ul.list li {
     font-size: 1.2rem;
   }
@@ -361,6 +355,7 @@ ul.listTasks li button.btn-remove {
     width: 5vh;
   }
 }
+
 @media (min-width: 768px) and (orientation: landscape) {
   .containerCategoryList h3.title {
     top: -8%;

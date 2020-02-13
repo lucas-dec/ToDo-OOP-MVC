@@ -56,15 +56,15 @@ class Model {
   }
 
   addTask(text) {
-    const indexSelectedCategories = this.categoryList.findIndex(
+    const indexSelectedCategory = this.categoryList.findIndex(
       category => category.selected === true
     );
 
     let id;
-    if (this.categoryList[indexSelectedCategories].tasks.length > 0)
+    if (this.categoryList[indexSelectedCategory].tasks.length > 0)
       id =
-        this.categoryList[indexSelectedCategories].tasks[
-          this.categoryList[indexSelectedCategories].tasks.length - 1
+        this.categoryList[indexSelectedCategory].tasks[
+          this.categoryList[indexSelectedCategory].tasks.length - 1
         ].id + 1;
     else id = 1;
     const task = {
@@ -72,33 +72,31 @@ class Model {
       text,
       completed: false
     };
-    this.categoryList[indexSelectedCategories].tasks.push(task);
+    this.categoryList[indexSelectedCategory].tasks.push(task);
     this.renderLabelTask(this.categoryList);
     this.renderTaskList(this.categoryList);
   }
 
   optionsTask(idTask, option, editText) {
-    const indexSelectedCategories = this.categoryList.findIndex(
+    const indexSelectedCategory = this.categoryList.findIndex(
       category => category.selected
     );
-    const indexTask = this.categoryList[
-      indexSelectedCategories
-    ].tasks.findIndex(task => task.id === idTask);
+    const indexTask = this.categoryList[indexSelectedCategory].tasks.findIndex(
+      task => task.id === idTask
+    );
 
     if (option === "removeTask") {
-      this.categoryList[indexSelectedCategories].tasks.splice(indexTask, 1);
+      this.categoryList[indexSelectedCategory].tasks.splice(indexTask, 1);
     }
     if (option === "makeCompleted") {
-      let status = this.categoryList[indexSelectedCategories].tasks[indexTask]
+      let status = this.categoryList[indexSelectedCategory].tasks[indexTask]
         .completed;
-      this.categoryList[indexSelectedCategories].tasks[
+      this.categoryList[indexSelectedCategory].tasks[
         indexTask
       ].completed = !status;
     }
     if (option === "textEdit") {
-      this.categoryList[indexSelectedCategories].tasks[
-        indexTask
-      ].text = editText;
+      this.categoryList[indexSelectedCategory].tasks[indexTask].text = editText;
     }
     this.renderLabelTask(this.categoryList);
     this.renderTaskList(this.categoryList);

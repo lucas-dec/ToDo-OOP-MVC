@@ -234,7 +234,6 @@ class View {
         btnAddTask.type = "submit";
         btnAddTask.className = "btn btn-add";
         formTask.append(inputTask, btnAddTask);
-
         this.containerForm.appendChild(formTask);
       }
     }
@@ -246,9 +245,7 @@ class View {
       const inputTask = this.containerForm.querySelector("input");
       if (inputTask.value == "") return;
       const text = inputTask.value;
-
       handler(text);
-
       inputTask.value = "";
     });
   }
@@ -287,6 +284,7 @@ class View {
       } else return;
     });
   }
+
   bindHandleEditTask(handler) {
     this.containerTasksList.addEventListener("focusout", e => {
       if (this._newTextTask) {

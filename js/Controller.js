@@ -36,8 +36,8 @@ class Controller {
     this.model.selectCategory(id);
   }
 
-  handleRemoveCategory(nameCategory) {
-    this.model.removeCategory(nameCategory);
+  handleRemoveCategory(idCategory) {
+    this.model.removeCategory(idCategory);
   }
 
   renderLabelTask(categoryList) {
@@ -52,7 +52,6 @@ class Controller {
       const countTasks = categoryList[selectedCategory].tasks.filter(
         task => !task.completed
       ).length;
-
       this.view.showTasksLabel(idCategory, nameCategory, countTasks);
     }
   }
@@ -62,7 +61,6 @@ class Controller {
       this.view.showTasks(null);
     else {
       const activeCategory = categoryList.filter(category => category.selected);
-
       this.view.showTasks(activeCategory[0].tasks);
       localStorage.setItem("todo", JSON.stringify(this.model.categoryList));
     }
