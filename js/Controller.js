@@ -41,7 +41,8 @@ class Controller {
   }
 
   renderLabelTask(categoryList) {
-    if (!categoryList) this.view.showTasksLabel(null);
+    if (categoryList == null || categoryList.length === 0)
+      this.view.showTasksLabel(null);
     else {
       const selectedCategory = categoryList.findIndex(
         category => category.selected
@@ -57,7 +58,8 @@ class Controller {
   }
 
   renderTaskList(categoryList) {
-    if (!categoryList) this.view.showTasks(null);
+    if (categoryList == null || categoryList.length === 0)
+      this.view.showTasks(null);
     else {
       const activeCategory = categoryList.filter(category => category.selected);
 

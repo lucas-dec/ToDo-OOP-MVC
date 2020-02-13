@@ -11,7 +11,7 @@ class View {
     this.labelBox.className = "label-box label-category";
     this.label = document.createElement("h1");
     this.label.className = "label";
-    this.label.textContent = "Your List";
+    this.label.textContent = "Your Lists";
     this.labelBox.appendChild(this.label);
     this.categoryList = document.createElement("ul");
     this.categoryList.className = "list categoryList";
@@ -136,7 +136,7 @@ class View {
       this.containerNameCategory.firstChild.remove();
     }
 
-    if (nameCategory === null) {
+    if (nameCategory == null) {
       this.nameCategory.textContent = "Select list ...";
       this.containerNameCategory.appendChild(this.nameCategory);
     } else {
