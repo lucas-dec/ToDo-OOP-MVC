@@ -42,6 +42,7 @@ class View {
 
     this.containerNameCategory = document.createElement("div");
     this.containerNameCategory.className = "label-box label-tasks";
+
     this.nameCategory = document.createElement("h1");
     this.nameCategory.className = "label";
 
@@ -63,6 +64,9 @@ class View {
       this.containerCategoryList,
       this.containerTasksList
     );
+
+    this._newTextTask = "";
+    this.editTask();
   }
 
   showCategories(categories) {
@@ -181,6 +185,7 @@ class View {
         const msg = document.createElement("h3");
         msg.textContent = "Nothing to do ! add a new task ...";
         this.tasksList.appendChild(msg);
+
         const formTask = document.createElement("form");
         const inputTask = document.createElement("input");
         inputTask.type = "text";
@@ -272,6 +277,23 @@ class View {
 
       const idTask = this.getIdTask(btn);
       handler(idTask, "makeCompleted");
+    });
+  }
+
+  editTask() {
+    this.containerTasksList.addEventListener("input", e => {
+      if (e.target.hasAttribute("contenteditable")) {
+        this._newTextTask = e.target.textContent;
+      } else return;
+    });
+  }
+  bindHandleEditTask(handler) {
+    this.containerTasksList.addEventListener("focusout", e => {
+      if (this._newTextTask) {
+        const idTask = this.getIdTask(e.target);
+        const editText = this._newTextTask;
+        handler(idTask, "textEdit", editText);
+      }
     });
   }
 }

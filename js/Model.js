@@ -1,51 +1,6 @@
 class Model {
   constructor() {
-    this.categoryList = [
-      {
-        id: 1,
-        name: "1st category",
-        selected: true,
-        tasks: [
-          {
-            id: 1,
-            text: "text of 1st task in 1st category",
-            completed: false
-          },
-          {
-            id: 2,
-            text: "text of 2nd task in 1st category",
-            completed: true
-          },
-          {
-            id: 3,
-            text: "text of 3th task in 1st category",
-            completed: false
-          }
-        ]
-      },
-      {
-        id: 2,
-        name: "2nd category",
-        selected: false,
-        tasks: [
-          {
-            id: 1,
-            text: "text of 1st task in 2nd category",
-            completed: false
-          },
-          {
-            id: 2,
-            text: "text of 2nd task in 2nd category",
-            completed: true
-          },
-          {
-            id: 3,
-            text: "text of 3th task in 2nd category",
-            completed: false
-          }
-        ]
-      }
-    ];
+    this.categoryList = JSON.parse(localStorage.getItem("todo")) || [];
   }
 
   bindRenderCategoryList(callback) {
@@ -100,15 +55,6 @@ class Model {
     this.renderTaskList(null);
   }
 
-  showLabelTasks() {
-    const selectedCategory = this.categoryList.findIndex(
-      category => category.selected
-    );
-    const nameCategory = this.categoryList[selectedCategory].name;
-    const countTasks = this.categoryList[selectedCategory].tasks.length;
-
-    this.renderLabelTask(nameCategory, countTasks);
-  }
   addTask(text) {
     const indexSelectedCategories = this.categoryList.findIndex(
       category => category.selected === true
@@ -149,7 +95,11 @@ class Model {
         indexTask
       ].completed = !status;
     }
-
+    if (option === "textEdit") {
+      this.categoryList[indexSelectedCategories].tasks[
+        indexTask
+      ].text = editText;
+    }
     this.renderLabelTask(this.categoryList);
     this.renderTaskList(this.categoryList);
   }

@@ -16,6 +16,7 @@ class Controller {
     this.view.bindHandleAddTasks(this.handleAddTasks.bind(this));
     this.view.bindHandleRemoveTask(this.handleOptionsTask.bind(this));
     this.view.bindHandleMakeCompletedTask(this.handleOptionsTask.bind(this));
+    this.view.bindHandleEditTask(this.handleOptionsTask.bind(this));
 
     this.renderCategoryList(this.model.categoryList);
     this.renderLabelTask(this.model.categoryList);
@@ -24,6 +25,7 @@ class Controller {
 
   renderCategoryList(categories) {
     this.view.showCategories(categories);
+    localStorage.setItem("todo", JSON.stringify(this.model.categoryList));
   }
 
   handleAddCategory(name) {
